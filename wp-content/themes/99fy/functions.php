@@ -7,6 +7,8 @@
  * @package 99fy
  */
 
+$text_price = 0; $image_price = 0;
+
 if ( ! function_exists( 'nnfy_setup' ) ) :
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -220,6 +222,310 @@ if( !function_exists('nnfy_admin_scripts') ) {
   }
 }
 add_action('admin_enqueue_scripts', 'nnfy_admin_scripts');
+
+
+/* Create Custom Field */
+
+function cfwc_create_custom_field() {
+	$args = array(
+	'id' => 'custom_text_field_title',
+	'wrapper_class' => 'form-row form-row-first',
+	'label' => __( 'Custom Text Field Title', 'cfwc' ),
+	'class' => 'cfwc-custom-field',
+	'desc_tip' => true,
+	'description' => __( 'Enter the title of your custom text field.', 'ctwc' ),
+	);
+	woocommerce_wp_text_input( $args );
+   }
+   add_action( 'woocommerce_product_options_general_product_data', 'cfwc_create_custom_field' );
+   
+   /**
+	* Save the custom field
+	* @since 1.0.0
+	*/
+   function cfwc_save_custom_field( $post_id ) {
+	$product = wc_get_product( $post_id );
+	$title = isset( $_POST['custom_text_field_title'] ) ? $_POST['custom_text_field_title'] : '';
+	$product->update_meta_data( 'custom_text_field_title', sanitize_text_field( $title ) );
+	$product->save();
+   }
+   add_action( 'woocommerce_process_product_meta', 'cfwc_save_custom_field' );
+   
+   /**
+	* Display custom field on the front end
+	* @since 1.0.0
+	*/
+	function cfwc_display_custom_field() {
+		global $post;
+		// Check for the custom field value
+		$product = wc_get_product( $post->ID );
+		$title = $product->get_meta( 'custom_text_field_title' );
+		
+		//if( $title ) {
+		// Only display our field if we've got a value for the field title
+		printf(
+		'<div class="cfwc-custom-field-wrapper"><label for="cfwc-title-field">Add Text</label><input type="text" id="cfwc-title-field" name="cfwc-title-field" value=""></div><br />',
+		esc_html( $title )
+		);
+		//}
+	   }
+	   add_action( 'woocommerce_before_add_to_cart_button', 'cfwc_display_custom_field' );
+   
+   /**
+	* Validate the text field
+	* @since 1.0.0
+	* @param Array $passed Validation status.
+	* @param Integer $product_id Product ID.
+	* @param Boolean $quantity Quantity
+	*/
+//    function cfwc_validate_custom_field( $passed, $product_id, $quantity ) {
+// 	if( empty( $_POST['cfwc-title-field'] ) ) {
+// 	// Fails validation
+// 	$passed = false;
+// 	wc_add_notice( __( 'Please enter a value into the text field', 'cfwc' ), 'error' );
+// 	}
+// 	return $passed;
+//    }
+//    add_filter( 'woocommerce_add_to_cart_validation', 'cfwc_validate_custom_field', 10, 3 );
+   
+   /**
+	* Add the text field as item data to the cart object
+	* @since 1.0.0
+	* @param Array $cart_item_data Cart item meta data.
+	* @param Integer $product_id Product ID.
+	* @param Integer $variation_id Variation ID.
+	* @param Boolean $quantity Quantity
+	*/
+   function cfwc_add_custom_field_item_data( $cart_item_data, $product_id, $variation_id, $quantity ) {
+	foreach( wc_get_product_terms( $product_id, 'pa_text-price' ) as $attribute_value ){
+		// Outputting the attibute values one by one
+		$text_price = (int)$attribute_value->name;
+	}
+	foreach( wc_get_product_terms( $product_id, 'pa_upload-image' ) as $attribute_value ){
+		// Outputting the attibute values one by one
+		$image_price = (int)$attribute_value->name;
+	}
+
+	if(!empty($_POST["upload_active"]) && $_POST["upload_active"] == 1 && ! empty( $_POST['cfwc-title-field'] ) ){
+		// Add the item data
+		$cart_item_data['title_field'] = $_POST['cfwc-title-field'];
+		$product = wc_get_product( $product_id ); // Expanded function
+		$price = $product->get_price(); // Expanded function
+		$cart_item_data['total_price'] = $price + $text_price + $image_price; // Expanded function
+	}
+	else if( ! empty( $_POST['cfwc-title-field'] ) ) {
+	// Add the item data
+	$cart_item_data['title_field'] = $_POST['cfwc-title-field'];
+	$product = wc_get_product( $product_id ); // Expanded function
+	$price = $product->get_price(); // Expanded function
+	$cart_item_data['total_price'] = $price + $text_price; // Expanded function
+	}
+	else if(!empty($_POST["upload_active"]) && $_POST["upload_active"] == 1){
+		// Add the item data
+		$cart_item_data['title_field'] = $_POST['cfwc-title-field'];
+		$product = wc_get_product( $product_id ); // Expanded function
+		$price = $product->get_price(); // Expanded function
+		$cart_item_data['total_price'] = $price + $image_price; // Expanded function
+	}
+	
+	return $cart_item_data;
+   }
+   add_filter( 'woocommerce_add_cart_item_data', 'cfwc_add_custom_field_item_data', 10, 4 );
+   
+   /**
+	* Update the price in the cart
+	* @since 1.0.0
+	*/
+   function cfwc_before_calculate_totals( $cart_obj ) {
+	if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+	return;
+	}
+	// Iterate through each cart item
+	foreach( $cart_obj->get_cart() as $key=>$value ) {
+	if( isset( $value['total_price'] ) ) {
+	$price = $value['total_price'];
+	$value['data']->set_price( ( $price ) );
+	}
+	}
+   }
+   add_action( 'woocommerce_before_calculate_totals', 'cfwc_before_calculate_totals', 10, 1 );
+   
+   /**
+	* Display the custom field value in the cart
+	* @since 1.0.0
+	*/
+   function cfwc_cart_item_name( $name, $cart_item, $cart_item_key ) {
+	if( isset( $cart_item['title_field'] ) ) {
+	$name .= sprintf(
+	'<p><b>Text added: </b>%s</p>',
+	esc_html( $cart_item['title_field'] )
+	);
+	}
+	return $name;
+   }
+   add_filter( 'woocommerce_cart_item_name', 'cfwc_cart_item_name', 10, 3 );
+   
+   /**
+	* Add custom field to order object
+	*/
+   function cfwc_add_custom_data_to_order( $item, $cart_item_key, $values, $order ) {
+	foreach( $item as $cart_item_key=>$values ) {
+	if( isset( $values['title_field'] ) ) {
+	$item->add_meta_data( __( 'Custom Field', 'cfwc' ), $values['title_field'], true );
+	}
+	}
+   }
+   add_action( 'woocommerce_checkout_create_order_line_item', 'cfwc_add_custom_data_to_order', 10, 4 );
+
+
+
+   // Display additional product fields (+ jQuery code)
+add_action( 'woocommerce_before_add_to_cart_button', 'display_additional_product_fields', 9 );
+function display_additional_product_fields(){
+    // Array of radio button options
+    $options = array( __("Front Side"), __("Back Side"), __("Both Sides") );
+    // Temporary styles
+    ?>
+    <style>
+    .upload-logo a.button { padding: .3em .75em !important; }
+    .upload-logo a.button.on { background-color: #CC0000 !important; color: #FFFFFF !important; }
+    .upload-logo p span { display:inline-block; padding:0 8px 0 4px; }
+	.image_radio { width: 8% !important; height: 10px !important;}
+    </style><?php
+    // Html output ?>
+    <div class="upload-logo">
+        <p><strong><?php _e( "Do you want to Add a Logo option"); ?>: </strong><br />
+            <a href="#" class="button"><?php _e( "Yes" ); ?></a><br />
+            <input type="hidden" name="upload_active" value="">
+        </p>
+        <div id="hidden-inputs" style="display:none">
+            <p><label for="radio_field"><?php
+
+            echo __( "Where you want the logo?" ) . ' <br>';
+
+            // Loop though each $options array
+            foreach( $options as $key => $option ) {
+                $atts = $key == 0 ? 'name="side_field" checked="checked"' : 'name="side_field"'; ?>
+                <input class="image_radio" type="radio" <?php echo $atts; ?> value="<?php echo $option; ?>"><span> <?php echo $option . '</span> <br />';
+            }
+            ?>
+            </label></p>
+            <p><label for="file_field"><?php echo __("Upload logo") . ': '; ?>
+                <input type='file' name='image' accept='image/*'>
+            </label></p>
+        </div>
+    </div><?php
+    // Javascript (jQuery) ?>
+    <script type="text/javascript">
+    jQuery( function($){
+        var a = '.upload-logo',         b = a+' a.button',
+            c = a+' #hidden-inputs',    d = a+' input[type=hidden]';
+
+        $(b).click(function(e){
+            e.preventDefault();
+            if( ! $(this).hasClass('on') ) {
+                $(this).addClass('on');
+                $(c).show();
+                $(d).val('1');
+            } else {
+                $(this).removeClass('on');
+                $(c).hide('fast');
+                $(d).val('');
+            }
+        });
+    });
+    </script>
+    <?php
+}
+
+// @ ===> Manage the file upload <=== @
+// Add custom fields data as the cart item custom data 
+add_filter( 'woocommerce_add_cart_item_data', 'add_custom_fields_data_as_custom_cart_item_data', 10, 2 );
+function add_custom_fields_data_as_custom_cart_item_data( $cart_item, $product_id ){
+    if( isset($_POST['upload_active']) && $_POST['upload_active'] && isset($_FILES['image']) ) {
+        $upload = wp_upload_bits( $_FILES['image']['name'], null, file_get_contents( $_FILES['image']['tmp_name'] ) );
+
+        $filetype = wp_check_filetype( basename( $upload['file'] ), null );
+
+        $upload_dir = wp_upload_dir();
+
+        $upl_base_url = is_ssl() ? str_replace('http://', 'https://', $upload_dir['baseurl']) : $upload_dir['baseurl'];
+
+        $base_name = basename( $upload['file'] );
+
+        $cart_item['custom_file'] = array(
+            'guid'      => $upl_base_url .'/'. _wp_relative_upload_path( $upload['file'] ),
+            'file_type' => $filetype['type'],
+            'file_name' => $base_name,
+            'title'     => preg_replace('/\.[^.]+$/', '', $base_name ),
+            'side'      => isset( $_POST['side_field'] ) ? sanitize_text_field( $_POST['side_field'] ) : '',
+            'key'       => md5( microtime().rand() ),
+        );
+    }
+    return $cart_item;
+}
+
+// Display custom cart item data in cart
+add_filter( 'woocommerce_get_item_data', 'display_custom_item_data', 10, 2 );
+function display_custom_item_data( $cart_item_data, $cart_item ) {
+    if ( isset( $cart_item['custom_file']['title'] ) ){
+        $cart_item_data[] = array(
+            'name' => __( 'Logo', 'woocommerce' ),
+            'value' =>  $cart_item['custom_file']['title']
+        );
+    }
+
+    if ( isset( $cart_item['custom_file']['side'] ) ){
+        $cart_item_data[] = array(
+            'name' => __( 'Side', 'woocommerce' ),
+            'value' =>  $cart_item['custom_file']['side']
+        );
+    }
+    return $cart_item_data;
+}
+
+// Save and display Logo data in orders and email notifications (everywhere)
+add_action( 'woocommerce_checkout_create_order_line_item', 'custom_field_update_order_item_meta', 20, 4 );
+function custom_field_update_order_item_meta( $item, $cart_item_key, $values, $order ) {
+    if ( isset( $values['custom_file'] ) ){
+        $item->update_meta_data( __('Logo'),  $values['custom_file']['title'] );
+        $item->update_meta_data( __('Side'),  $values['custom_file']['side'] );
+        $item->update_meta_data( '_logo_file_data',  $values['custom_file'] );
+    }
+}
+
+// Display a linked button + the link of the logo file in backend
+add_action( 'woocommerce_after_order_itemmeta', 'backend_logo_link_after_order_itemmeta', 20, 3 );
+function backend_logo_link_after_order_itemmeta( $item_id, $item, $product ) {
+    // Only in backend for order line items (avoiding errors)
+    if( is_admin() && $item->is_type('line_item') && $item->get_meta('_logo_file_data') ){
+        $file_data = $item->get_meta( '_logo_file_data' );
+        echo '<p><a href="'.$file_data['guid'].'" target="_blank" class="button">'.__("Open Logo") . '</a></p>';
+        echo '<p>Link: <textarea type="text" class="input-text" readonly>'.$file_data['guid'].'</textarea></p>';
+    }
+}
+
+// Admin: Add custom field in product variations options pricing
+add_action( 'woocommerce_variation_options_pricing', 'add_variation_custom_option_pricing', 10, 3 );
+function add_variation_custom_option_pricing( $loop, $variation_data, $variation ){
+
+   woocommerce_wp_text_input( array(
+        'id'            => '_cost_price['.$loop.']',
+        'label'         => __("Cost Price", "woocommerce") . ' (' . get_woocommerce_currency_symbol() . ')',
+        'class' => 'short wc_input_price',
+        'data_type'     => 'price',
+        'wrapper_class' => 'form-row form-row-first',
+        'value'         => wc_format_localized_price( get_post_meta( $variation->ID, '_cost_price', true ) )
+    ) );
+}
+
+// Admin: Save custom field value from product variations options pricing
+add_action( 'woocommerce_save_product_variation', 'save_variation_custom_option_pricing', 10, 2 );
+function save_variation_custom_option_pricing( $variation_id, $i ){
+    if( isset($_POST['_cost_price'][$i]) ){
+        update_post_meta( $variation_id, '_cost_price', wc_clean( wp_unslash( str_replace( ',', '.', $_POST['_cost_price'][$i]) ) ) );
+    }
+}
 
 
 

@@ -1,0 +1,94 @@
+2021-01-08T15:57:46+00:00 CRITICAL Maximum execution time of 120 seconds exceeded in C:\xampp\htdocs\wp-task\wp-includes\Requests\Transport\cURL.php on line 463
+
+2021-01-08T16:00:44+00:00 CRITICAL Maximum execution time of 120 seconds exceeded in C:\xampp\htdocs\wp-task\wp-includes\Requests\Transport\cURL.php on line 463
+
+2021-01-08T16:45:06+00:00 CRITICAL Out of memory (allocated 12582912) (tried to allocate 32768 bytes) in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\packages\woocommerce-admin\src\API\Themes.php on line 1
+
+2021-01-08T17:14:28+00:00 CRITICAL Uncaught Error: Call to a member function get_attribute() on null in C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php:104
+Stack trace:
+#0 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-core-functions.php(345): include()
+#1 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#2 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(343): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(218): preg_replace_callback('/\\[(\\[?)(woocom...', 'do_shortcode_ta...', '[woocommerce_ca...')
+#7 C:\xampp\htdocs\wp-task\wp-includes\clas in C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php on line 104
+
+2021-01-08T17:14:28+00:00 CRITICAL Uncaught Error: Call to a member function get_attribute() on null in C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php:104
+Stack trace:
+#0 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-core-functions.php(345): include()
+#1 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#2 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(343): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(218): preg_replace_callback('/\\[(\\[?)(woocom...', 'do_shortcode_ta...', '[woocommerce_ca...')
+#7 C:\xampp\htdocs\wp-task\wp-includes\clas in C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php on line 104
+
+2021-01-08T17:38:49+00:00 CRITICAL Uncaught Error: Call to a member function has_weight() on null in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php:3378
+Stack trace:
+#0 C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php(104): wc_display_product_attributes(NULL)
+#1 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-core-functions.php(345): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#3 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#4 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#5 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(343): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#6 [internal function]: do_shortcode_tag(Array)
+#7 C:\xampp\htdocs\wp-task\wp-includes in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php on line 3378
+
+2021-01-08T17:38:50+00:00 CRITICAL Uncaught Error: Call to a member function has_weight() on null in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php:3378
+Stack trace:
+#0 C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php(104): wc_display_product_attributes(NULL)
+#1 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-core-functions.php(345): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#3 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#4 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#5 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(343): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#6 [internal function]: do_shortcode_tag(Array)
+#7 C:\xampp\htdocs\wp-task\wp-includes in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php on line 3378
+
+2021-01-08T17:39:09+00:00 CRITICAL Uncaught Error: Call to a member function has_weight() on null in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php:3378
+Stack trace:
+#0 C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php(104): wc_display_product_attributes(NULL)
+#1 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-core-functions.php(345): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#3 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#4 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#5 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(343): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#6 [internal function]: do_shortcode_tag(Array)
+#7 C:\xampp\htdocs\wp-task\wp-includes in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php on line 3378
+
+2021-01-08T17:39:10+00:00 CRITICAL Uncaught Error: Call to a member function has_weight() on null in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php:3378
+Stack trace:
+#0 C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php(104): wc_display_product_attributes(NULL)
+#1 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-core-functions.php(345): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#3 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#4 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#5 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(343): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#6 [internal function]: do_shortcode_tag(Array)
+#7 C:\xampp\htdocs\wp-task\wp-includes in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php on line 3378
+
+2021-01-08T17:39:49+00:00 CRITICAL Uncaught Error: Call to a member function has_weight() on null in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php:3378
+Stack trace:
+#0 C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php(104): wc_display_product_attributes(NULL)
+#1 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-core-functions.php(345): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#3 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#4 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#5 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(343): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#6 [internal function]: do_shortcode_tag(Array)
+#7 C:\xampp\htdocs\wp-task\wp-includes in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php on line 3378
+
+2021-01-08T17:39:50+00:00 CRITICAL Uncaught Error: Call to a member function has_weight() on null in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php:3378
+Stack trace:
+#0 C:\xampp\htdocs\wp-task\wp-content\themes\99fy\woocommerce\cart\cart.php(104): wc_display_product_attributes(NULL)
+#1 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-core-functions.php(345): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#3 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#4 C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#5 C:\xampp\htdocs\wp-task\wp-includes\shortcodes.php(343): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#6 [internal function]: do_shortcode_tag(Array)
+#7 C:\xampp\htdocs\wp-task\wp-includes in C:\xampp\htdocs\wp-task\wp-content\plugins\woocommerce\includes\wc-template-functions.php on line 3378
+
